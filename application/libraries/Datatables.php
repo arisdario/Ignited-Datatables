@@ -28,6 +28,8 @@
     private $columns        = array();
     private $where          = array();
     private $or_where       = array();
+    private $having         = array();
+    private $or_having      = array();
     private $where_in       = array();
     private $like           = array();
     private $filter         = array();
@@ -183,6 +185,36 @@
     public function filter($key_condition, $val = NULL, $backtick_protect = TRUE)
     {
       $this->filter[] = array($key_condition, $val, $backtick_protect);
+      return $this;
+    }
+    
+    /**
+    * Generates the HAVING portion of the query
+    *
+    * @param mixed $key_condition
+    * @param string $val
+    * @param bool $backtick_protect
+    * @return mixed
+    */
+    public function having($key_condition, $val = NULL, $backtick_protect = TRUE)
+    {
+      $this->having[] = array($key_condition, $val, $backtick_protect);
+      $this->ci->db->having($key_condition, $val, $backtick_protect);
+      return $this;
+    }
+    
+    /**
+    * Generates the OR_HAVING portion of the query
+    *
+    * @param mixed $key_condition
+    * @param string $val
+    * @param bool $backtick_protect
+    * @return mixed
+    */
+    public function or_having($key_condition, $val = NULL, $backtick_protect = TRUE)
+    {
+      $this->or_having[] = array($key_condition, $val, $backtick_protect);
+      $this->ci->db->or_having($key_condition, $val, $backtick_protect);
       return $this;
     }
 
